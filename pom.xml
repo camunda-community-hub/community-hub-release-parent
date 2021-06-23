@@ -21,6 +21,13 @@
         <relativePath />
     </parent>
 
+    <properties>
+        <nexus.snapshot.repository.id>camunda-nexus</nexus.snapshot.repository.id>
+        <nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions-snapshots</nexus.snapshot.repository>
+        <nexus.release.repository.id>camunda-nexus</nexus.release.repository.id>
+        <nexus.release.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions</nexus.release.repository>
+    </properties>
+
     <profiles>
         <profile>
             <id>community-action-maven-release</id>
