@@ -25,6 +25,7 @@
         <nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions-snapshots</nexus.snapshot.repository>
         <nexus.release.repository.id>camunda-nexus</nexus.release.repository.id>
         <nexus.release.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions</nexus.release.repository>
+        <nexus.sonatype.url>https://s01.oss.sonatype.org</nexus.sonatype.url>
     </properties>
 
     <profiles>
