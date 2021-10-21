@@ -119,7 +119,7 @@
             </build>
         </profile>
         <profile>
-            <id>central</id>
+            <id>oss-maven-central</id>
             <properties>
                 <serverId>central</serverId>
                 <nexusUrl>oss.sonatype.org</nexusUrl>
