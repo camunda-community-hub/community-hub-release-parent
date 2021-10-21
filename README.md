@@ -15,7 +15,7 @@ Inherit the community-hub-release-parent POM inside your project like so:
 <parent>
     <groupId>org.camunda.community</groupId>
     <artifactId>community-hub-release-parent</artifactId>
-    <version>1.2.0</version>    
+    <version>1.2.1</version>    
     <relativePath />
 </parent>  
 ```
