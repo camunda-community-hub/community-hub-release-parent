@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.camunda.community</groupId>
@@ -6,88 +7,183 @@
     <version>1.2.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>camunda community hub - Release Parent Pom</name>
+    <name>Camunda Community HUB - Release Parent Pom</name>
 
     <description>
-        This pom defines the required plugins and profiles to allow a camunda community hub release build.
-        Inherit this pom when you want to use the camunda community hub GitHub release action.
+        This pom defines the required plugins and profiles to allow a Camunda Community HUB release build.
+        Inherit this pom when you want to use the Camunda Community HUB GitHub release action.
     </description>
 
-    <parent>
-        <groupId>org.camunda</groupId>
-        <artifactId>camunda-release-parent</artifactId>
-        <version>3.9.1</version>
-        <relativePath />
-    </parent>
-
     <properties>
-        <nexus.snapshot.repository.id>camunda-nexus</nexus.snapshot.repository.id>
-        <nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions-snapshots</nexus.snapshot.repository>
-        <nexus.release.repository.id>camunda-nexus</nexus.release.repository.id>
-        <nexus.release.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions</nexus.release.repository>
+        <java.version>11</java.version>
+        <camunda-hub-encoding>UTF-8</camunda-hub-encoding>
+        <camunda-hub-server-id>ossrh</camunda-hub-server-id>
+        <camunda-hub-nexus-url>https://oss.sonatype.org/</camunda-hub-nexus-url>
+        <camunda-hub-skip-staging>false</camunda-hub-skip-staging>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.2.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                                <configuration>
-                                    <attach>true</attach>
-                                    <forceCreation>true</forceCreation>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.3.1</version>
-                        <configuration>
-                            <quiet>true</quiet>
-                            <source>${version.java}</source>
-                            <failOnError>false</failOnError>
-                            <doclint>none</doclint>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.0.1</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
-                    </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-maven</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireMavenVersion>
+                                        <version>3.6.2</version>
+                                    </requireMavenVersion>
+                                    <requireJavaVersion>
+                                        <version>11</version>
+                                    </requireJavaVersion>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <encoding>${camunda-hub-encoding}</encoding>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <encoding>${camunda-hub-encoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <configuration>
+                        <encoding>${camunda-hub-encoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <configuration>
+                        <encoding>${camunda-hub-encoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <configuration>
+                                <attach>true</attach>
+                                <forceCreation>true</forceCreation>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <configuration>
+                        <quiet>true</quiet>
+                        <encoding>${camunda-hub-encoding}</encoding>
+                        <source>${java.version}</source>
+                        <failOnError>false</failOnError>
+                        <doclint>none</doclint>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <gpgArguments>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                        </gpgArguments>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <!-- use Nexus Staging Plugin -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.8</version>
+                    <executions>
+                        <execution>
+                            <id>default-deploy</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                            <configuration>
+                                <serverId>${camunda-hub-server-id}</serverId>
+                                <nexusUrl>${camunda-hub-nexus-url}</nexusUrl>
+                                <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                                <detectBuildFailures>true</detectBuildFailures>
+                                <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
+                                <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
+                                <skipStaging>false</skipStaging>
+                                <skipNexusStagingDeployMojo>${camunda-hub-skip-staging}</skipNexusStagingDeployMojo>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -112,6 +208,56 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>camunda-repository</id>
+            <properties>
+                <camunda-hub-server-id>camunda-nexus</camunda-hub-server-id>
+                <camunda-hub-nexus-url>
+                    https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions
+                </camunda-hub-nexus-url>
+            </properties>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>camunda-nexus</id>
+                    <url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>camunda-nexus</id>
+                    <url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions</url>
+                </repository>
+            </distributionManagement>
+        </profile>
     </profiles>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Camunda Services GmbH</name>
+        <url>https://www.camunda.com</url>
+    </organization>
+    <url>https://camunda.org</url>
+    <developers>
+        <developer>
+            <id>camunda.org</id>
+            <name>Camunda BPM Community</name>
+            <organization>camunda.org</organization>
+            <organizationUrl>https://camunda.org</organizationUrl>
+        </developer>
+    </developers>
 </project>
