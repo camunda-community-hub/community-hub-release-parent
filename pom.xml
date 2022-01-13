@@ -149,7 +149,7 @@
                                     <nexusUrl>${central.staging.deploy.url}</nexusUrl>
                                     <skipStaging>true</skipStaging>
                                     <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
-                                    <autoReleaseAfterClose>
+                                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                                 </configuration>
                             </execution>
                         </executions>
