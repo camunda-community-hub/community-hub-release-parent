@@ -143,13 +143,15 @@
                                     <goal>deploy</goal>
                                 </goals>
                                 <configuration>
-                                    <altStagingDirectory>${session.executionRootDirectory}/target/central-staging</altStagingDirectory>
+                                    <serverId>${camunda-hub-server-id}</serverId>
+                                    <nexusUrl>${camunda-hub-nexus-url}</nexusUrl>
+                                    <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
+                                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
                                     <detectBuildFailures>true</detectBuildFailures>
-                                    <serverId>${central.staging.deploy.id}</serverId>
-                                    <nexusUrl>${central.staging.deploy.url}</nexusUrl>
-                                    <skipStaging>true</skipStaging>
-                                    <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
-                                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                                    <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
+                                    <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
+                                    <skipStaging>false</skipStaging>
+                                    <skipNexusStagingDeployMojo>${camunda-hub-skip-staging}</skipNexusStagingDeployMojo>
                                 </configuration>
                             </execution>
                         </executions>
