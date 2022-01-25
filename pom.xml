@@ -143,12 +143,15 @@
                                     <goal>deploy</goal>
                                 </goals>
                                 <configuration>
-                                    <altStagingDirectory>${session.executionRootDirectory}/target/central-staging</altStagingDirectory>
+                                    <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
+                                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
                                     <detectBuildFailures>true</detectBuildFailures>
                                     <serverId>${central.staging.deploy.id}</serverId>
                                     <nexusUrl>${central.staging.deploy.url}</nexusUrl>
-                                    <skipStaging>true</skipStaging>
+                                    <stagingRepositoryId>central</stagingRepositoryId>
+                                    <altStagingDirectory>${session.executionRootDirectory}/target/central-staging</altStagingDirectory>
                                     <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
+                                    <skipStaging>false</skipStaging>
                                 </configuration>
                             </execution>
                         </executions>
