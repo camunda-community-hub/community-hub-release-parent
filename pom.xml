@@ -22,9 +22,9 @@
 
     <properties>
         <nexus.snapshot.repository.id>camunda-nexus</nexus.snapshot.repository.id>
-        <nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions-snapshots</nexus.snapshot.repository>
+        <nexus.snapshot.repository>https://artifacts.camunda.com/artifactory/camunda-bpm-community-extensions-snapshots/</nexus.snapshot.repository>
         <nexus.release.repository.id>camunda-nexus</nexus.release.repository.id>
-        <nexus.release.repository>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions</nexus.release.repository>
+        <nexus.release.repository>https://artifacts.camunda.com/artifactory/camunda-bpm-community-extensions/</nexus.release.repository>
     </properties>
 
     <build>
