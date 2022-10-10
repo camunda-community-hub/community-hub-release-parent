@@ -148,7 +148,6 @@
                                     <detectBuildFailures>true</detectBuildFailures>
                                     <serverId>${central.staging.deploy.id}</serverId>
                                     <nexusUrl>${central.staging.deploy.url}</nexusUrl>
-                                    <stagingRepositoryId>central</stagingRepositoryId>
                                     <altStagingDirectory>${session.executionRootDirectory}/target/central-staging</altStagingDirectory>
                                     <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
                                     <skipStaging>false</skipStaging>
