@@ -131,7 +131,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.8</version>
+                        <version>1.6.13</version>
                         <extensions>true</extensions>
                         <executions>
                             <!-- the execution default-deploy (defined in camunda-release-parent) deploys into camunda nexus -->
