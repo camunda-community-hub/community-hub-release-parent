@@ -103,10 +103,8 @@
                             </gpgArguments>
                         </configuration>
                     </plugin>
-
             </plugins>
         </pluginManagement>
-        <plugins>
         <plugins>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
