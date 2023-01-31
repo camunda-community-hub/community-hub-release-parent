@@ -36,6 +36,7 @@ jobs:
         maven-usr: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_USR }}
         maven-psw: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_PSW }}
         maven-gpg-passphrase: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_PASSPHRASE }}
+        maven-url: https://s01.oss.sonatype.org
         github-token: ${{ secrets.GITHUB_TOKEN }}
         artifacts-pattern: ""
       id: release
