@@ -248,7 +248,7 @@
             <id>oss-maven-central</id>
             <properties>
                 <serverId>central</serverId>
-                <nexusUrl>oss.sonatype.org</nexusUrl>
+                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                 <central.staging.deploy.id>${serverId}</central.staging.deploy.id>
                 <central.staging.deploy.url>${nexusUrl}</central.staging.deploy.url>
             </properties>
