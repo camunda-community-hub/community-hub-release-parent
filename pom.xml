@@ -47,8 +47,8 @@
                     <version>3.10.1</version>
                     <configuration>
                         <encoding>UTF-8</encoding>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
+                        <source>${version.java}</source>
+                        <target>${version.java}</target>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -158,7 +158,7 @@
                                 <version>3.6.2</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <version>${java.version}</version>
+                                <version>${version.java}</version>
                             </requireJavaVersion>
                         </rules>
                     </configuration>
