@@ -142,6 +142,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>3.0.0</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
@@ -165,29 +168,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <id>default-deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <configuration>
-                            <detectBuildFailures>true</detectBuildFailures>
-                            <serverId>${nexus.staging.deploy.id}</serverId>
-                            <nexusUrl>${nexus.staging.deploy.url}</nexusUrl>
-                            <skipStaging>true</skipStaging>
-                            <skipNexusStagingDeployMojo>${skip.camunda.release}</skipNexusStagingDeployMojo>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 
     <distributionManagement>
@@ -203,6 +183,10 @@
 
     <profiles>
         <profile>
+            <!--
+            This profile defines steps needed to create artifacts for the release.
+            Typically these are sources.jar, javadoc.jar and GPG signatures for poms and all artifacts.
+            -->
             <id>community-action-maven-release</id>
             <build>
                 <plugins>
@@ -221,7 +205,46 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
+            <!--
+            This profile configures environment for the publication using the nexus staging plugin into
+            Camunda repository (artifactory).
+            -->
+            <id>camunda-repository</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <!-- skip Mojo Execution if skip.camunda.release is set to false -->
+                                <id>default-deploy</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <configuration>
+                                    <detectBuildFailures>true</detectBuildFailures>
+                                    <serverId>${nexus.staging.deploy.id}</serverId>
+                                    <nexusUrl>${nexus.staging.deploy.url}</nexusUrl>
+                                    <skipStaging>true</skipStaging>
+                                    <skipNexusStagingDeployMojo>${skip.camunda.release}</skipNexusStagingDeployMojo>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+            This profile configures environment for the publication using the nexus staging plugin into
+            OSS Nexus repository.
+            -->
             <id>oss-maven-central</id>
             <properties>
                 <serverId>central</serverId>
@@ -236,8 +259,6 @@
                         <artifactId>nexus-staging-maven-plugin</artifactId>
                         <extensions>true</extensions>
                         <executions>
-                            <!-- the execution default-deploy (defined in camunda-release-parent) deploys into camunda nexus -->
-                            <!-- add additional execution to deploy to maven central -->
                             <execution>
                                 <id>deploy-to-maven-central</id>
                                 <phase>deploy</phase>
@@ -245,20 +266,17 @@
                                     <goal>deploy</goal>
                                 </goals>
                                 <configuration>
-                                    <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
-                                    <autoReleaseAfterClose>${autoReleaseAfterClose}</autoReleaseAfterClose>
-                                    <detectBuildFailures>true</detectBuildFailures>
                                     <serverId>${central.staging.deploy.id}</serverId>
                                     <nexusUrl>${central.staging.deploy.url}</nexusUrl>
                                     <altStagingDirectory>${session.executionRootDirectory}/target/central-staging</altStagingDirectory>
                                     <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
-                                    <skipStaging>false</skipStaging>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
+            <!-- This part overwrites the default distribution management pointing to Camunda Artifactory -->
             <distributionManagement>
                 <snapshotRepository>
                     <id>${central.staging.deploy.id}</id>
@@ -270,104 +288,18 @@
                 </repository>
             </distributionManagement>
         </profile>
-        <!-- Camunda Parent profile - not used?
-        <profile>
-            <id>sonatype-oss-release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${plugin.version.source}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>attach-test-sources</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>test-jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${plugin.version.javadoc}</version>
-                        <configuration>
-                            <quiet>true</quiet>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${plugin.version.gpg}</version>
-                        <configuration>
-                            <passphrase>${gpg.passphrase}</passphrase>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <extensions>true</extensions>
-                        <executions>
-                            <execution>
-                                <id>central-deploy</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                                <configuration>
-                                    <detectBuildFailures>true</detectBuildFailures>
-                                    <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
-                                    <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
-                                    <serverId>central</serverId>
-                                    <nexusUrl>${nexus.sonatype.url}</nexusUrl>
-                                    <skipStaging>false</skipStaging>
-                                    <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        -->
     </profiles>
 
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
 
     <organization>
         <name>Camunda</name>
-        <url>http://www.camunda.com</url>
+        <url>https://www.camunda.com</url>
     </organization>
 
     <url>https://github.com/camunda-community-hub/</url>
