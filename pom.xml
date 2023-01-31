@@ -103,9 +103,45 @@
                             </gpgArguments>
                         </configuration>
                     </plugin>
+
             </plugins>
         </pluginManagement>
+        <plugins>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <configuration>
+                            <detectBuildFailures>true</detectBuildFailures>
+                            <serverId>${nexus.staging.deploy.id}</serverId>
+                            <nexusUrl>${nexus.staging.deploy.url}</nexusUrl>
+                            <skipStaging>true</skipStaging>
+                            <skipNexusStagingDeployMojo>${skip.camunda.release}</skipNexusStagingDeployMojo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>${nexus.snapshot.repository.id}</id>
+            <url>${nexus.snapshot.repository}</url>
+        </snapshotRepository>
+        <repository>
+            <id>${nexus.release.repository.id}</id>
+            <url>${nexus.release.repository}</url>
+        </repository>
+    </distributionManagement>
 
     <profiles>
         <profile>
@@ -177,6 +213,113 @@
                 </repository>
             </distributionManagement>
         </profile>
+        <!-- Camunda Parent profile - not used?
+        <profile>
+            <id>sonatype-oss-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${plugin.version.source}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>attach-test-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>test-jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${plugin.version.javadoc}</version>
+                        <configuration>
+                            <quiet>true</quiet>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${plugin.version.gpg}</version>
+                        <configuration>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <id>central-deploy</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <configuration>
+                                    <detectBuildFailures>true</detectBuildFailures>
+                                    <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
+                                    <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
+                                    <serverId>central</serverId>
+                                    <nexusUrl>${nexus.sonatype.url}</nexusUrl>
+                                    <skipStaging>false</skipStaging>
+                                    <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        -->
     </profiles>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Camunda</name>
+        <url>http://www.camunda.com</url>
+    </organization>
+
+    <url>https://github.com/camunda-community-hub/</url>
+
+    <scm>
+        <url>https://github.com/camunda-community-hub/community-hub-release-parent</url>
+        <connection>scm:git:git@github.com:camunda-community-hub/community-hub-release-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:camunda-community-hub/community-hub-release-parent.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
 </project>
