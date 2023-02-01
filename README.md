@@ -3,14 +3,16 @@
 community-hub-release-parent
 ======================
 
-This is a POM which can be inherited for [Community Hub Maven releases](https://github.com/camunda-community-hub/community-action-maven-release), defining some common release properties. It allows deploying to two repositories simultaneously. One is a Nexus OSS server, the other one a Nexus Enterprise server.
-It will deploy the artifacts at the end of the build to keep the window of failure small when talking to external systems.
+use this parent POM to do releases via the  [Community Hub Maven release action](https://github.com/camunda-community-hub/community-action-maven-release) to:
+
+- [Camunda Artifactory](https://artifacts.camunda.com/): Snapshots and releases
+- [Sonatype](https://oss.sonatype.org/#stagingRepositories) (aka Maven Central): Releases
+
 
 Usage
 -----
 
-Inherit the community-hub-release-parent POM inside your project like so:  
-
+In your pom.xml, add a parent:
 ```
 <parent>
     <groupId>org.camunda.community</groupId>
