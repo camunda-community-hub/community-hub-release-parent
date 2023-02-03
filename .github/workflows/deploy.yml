@@ -37,5 +37,6 @@ jobs:
         maven-psw: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_PSW }}
         maven-gpg-passphrase: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_PASSPHRASE }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        maven-auto-release-after-close: true
         artifacts-pattern: ""
       id: release
