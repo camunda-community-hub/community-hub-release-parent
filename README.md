@@ -18,7 +18,7 @@ In your pom.xml, add a parent:
 <parent>
     <groupId>org.camunda.community</groupId>
     <artifactId>community-hub-release-parent</artifactId>
-    <version>1.4.0</version>    
+    <version>1.4.1</version>    
     <relativePath />
 </parent>  
 ```
