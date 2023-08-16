@@ -70,12 +70,12 @@
                     <!-- Pin version down to 2.5 to be able to run on JDK 17 -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.5</version>
+                    <version>3.3.0</version>
                     <configuration>
-                        <useDefaultManifestFile>true</useDefaultManifestFile>
                         <archive>
                             <manifest>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             </manifest>
                         </archive>
                     </configuration>
