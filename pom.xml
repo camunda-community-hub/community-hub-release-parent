@@ -3,7 +3,7 @@
 
     <groupId>org.camunda.community</groupId>
     <artifactId>community-hub-release-parent</artifactId>
-    <version>1.4.3</version>
+    <version>1.4.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Camunda Community Hub - Release Parent Pom</name>
