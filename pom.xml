@@ -367,6 +367,38 @@ Please refer to the documentation for migration guidance and namespace-specific 
 https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewers/RELEASE.MD#migration-to-sonatype-central-portal--how-to
                                             </message>
                                         </evaluateBeanshell>
+                                        <evaluateBeanshell>
+                                            <condition><![CDATA[
+                                                !"${project.groupId}".startsWith("io.camunda") ||
+                                                "${oss-maven-central.acknowledge.deprecation}".equals("true")
+                                                ]]>
+                                            </condition>
+                                            <message>
+❌ Deployment Blocked: Publishing under the io.camunda namespace using the deprecated oss-maven-central profile is no longer supported.
+To deploy to Maven Central, please use the central-sonatype-publish profile, which supports the new Central Portal publishing interface.
+
+&#x1f6d1; To bypass this check (not recommended), you may pass -Doss-maven-central.acknowledge.deprecation=true.
+
+Please refer to the documentation for migration guidance and namespace-specific rollout details:
+https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewers/RELEASE.MD#migration-to-sonatype-central-portal--how-to
+                                            </message>
+                                        </evaluateBeanshell>
+                                        <evaluateBeanshell>
+                                            <condition><![CDATA[
+                                                !"${project.groupId}".startsWith("org.camunda") ||
+                                                "${oss-maven-central.acknowledge.deprecation}".equals("true")
+                                                ]]>
+                                            </condition>
+                                            <message>
+❌ Deployment Blocked: Publishing under the org.camunda namespace using the deprecated oss-maven-central profile is no longer supported.
+To deploy to Maven Central, please use the central-sonatype-publish profile, which supports the new Central Portal publishing interface.
+
+&#x1f6d1; To bypass this check (not recommended), you may pass -Doss-maven-central.acknowledge.deprecation=true.
+
+Please refer to the documentation for migration guidance and namespace-specific rollout details:
+https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewers/RELEASE.MD#migration-to-sonatype-central-portal--how-to
+                                            </message>
+                                        </evaluateBeanshell>
                                     </rules>
                                     <fail>true</fail>
                                 </configuration>
