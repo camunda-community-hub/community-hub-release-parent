@@ -2,23 +2,23 @@
 
 # Camunda Community Hub Release Parent
 
-
-Use this parent POM to do releases via the  [Community Hub Maven release action](https://github.com/camunda-community-hub/community-action-maven-release) to:
+Use this parent POM to do releases via the [Community Hub Maven release action](https://github.com/camunda-community-hub/community-action-maven-release) (v2 or higher) to:
 
 - [Camunda Artifactory](https://artifacts.camunda.com/)
-- [Sonatype](https://oss.sonatype.org/#stagingRepositories) (aka Maven Central)
+- [Maven Central](https://central.sonatype.com/publishing/deployments)
 
-See [Camunda Community Hub release documentation](https://github.com/camunda-community-hub/community/blob/main/RELEASE.MD) for more info on this.
+See [Camunda Community Hub release documentation](https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewers/RELEASE.MD) for more info on this.
 
 
-# Usage
+## Usage
 
-In your pom.xml, add a parent:
-```
+In your pom.xml, add a parent using the [newest version available of this POM](https://maven-badges.herokuapp.com/maven-central/org.camunda.community/community-hub-release-parent):
+
+```xml
 <parent>
     <groupId>org.camunda.community</groupId>
     <artifactId>community-hub-release-parent</artifactId>
-    <version>1.4.3</version>    
+    <version>2.0.0</version> <!-- Use the newest version available! -->
     <relativePath />
-</parent>  
+</parent>
 ```
