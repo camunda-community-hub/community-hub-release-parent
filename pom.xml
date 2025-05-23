@@ -315,6 +315,34 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                            <id>enforce-deprecation</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <evaluateBeanshell>
+                                        <condition>!"${project.groupId}".startsWith("io.zeebe")</condition>
+                                        <message>
+⚠️ WARNING: The 'oss-maven-central' profile is deprecated and no longer supports deploying artifacts under the io.zeebe namespace to Sonatype OSSRH (Maven Central).
+
+To deploy packages under io.zeebe to Maven Central, please switch to the new profile 'central-sonatype-publish'
+available starting with version 1.5 of the parent POM org.camunda.community:community-hub-release-parent.
+
+For migration guidance, visit: https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewers/RELEASE.MD
+                                        </message>
+                                    </evaluateBeanshell>
+                                </rules>
+                                <fail>true</fail> <!-- don't fail build, only print -->
+                            </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
             <!-- This part overwrites the default distribution management pointing to Camunda Artifactory -->
