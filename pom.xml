@@ -319,6 +319,33 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>warn-deprecated-profile</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <evaluateBeanshell>
+                                            <condition>false</condition>
+                                            <message>
+⚠️ Deprecated Profile Notice: The oss-maven-central profile is deprecated and will be removed in a future release.
+
+A new profile, central-sonatype-publish, is available for use with the new Central Portal publishing interface.
+Please refer to the documentation for migration guidance:
+https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewers/RELEASE.MD#migration-to-sonatype-central-portal--how-to
+                                            </message>
+                                        </evaluateBeanshell>
+                                    </rules>
+                                    <fail>false</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
             <!-- This part overwrites the default distribution management pointing to Camunda Artifactory -->
