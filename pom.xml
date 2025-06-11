@@ -3,7 +3,7 @@
 
     <groupId>org.camunda.community</groupId>
     <artifactId>community-hub-release-parent</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Camunda Community Hub - Release Parent Pom</name>
@@ -361,7 +361,7 @@ https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewe
 ❌ Deployment Blocked: Publishing under the io.zeebe namespace using the deprecated oss-maven-central profile is no longer supported.
 To deploy to Maven Central, please use the central-sonatype-publish profile, which supports the new Central Portal publishing interface.
 
-🛑 To bypass this check (not recommended), you may pass -Doss-maven-central.acknowledge.deprecation=true.
+&#x1f6d1; To bypass this check (not recommended), you may pass -Doss-maven-central.acknowledge.deprecation=true.
 
 Please refer to the documentation for migration guidance and namespace-specific rollout details:
 https://github.com/camunda-community-hub/community/blob/main/maintainers-reviewers/RELEASE.MD#migration-to-sonatype-central-portal--how-to
