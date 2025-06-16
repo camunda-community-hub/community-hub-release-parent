@@ -293,7 +293,7 @@
             <id>oss-maven-central</id>
             <properties>
                 <serverId>central</serverId>
-                <nexusUrl>https://oss.sonatype.org/</nexusUrl> <!-- This is just the default, overwritten by action as some artifacts go to s01.oss...-->
+                <nexusUrl>https://ossrh-staging-api.central.sonatype.com</nexusUrl> <!-- This is just the default, overwritten by action as some artifacts go to s01.oss...-->
                 <central.staging.deploy.id>${serverId}</central.staging.deploy.id>
                 <central.staging.deploy.url>${nexusUrl}</central.staging.deploy.url>
             </properties>
