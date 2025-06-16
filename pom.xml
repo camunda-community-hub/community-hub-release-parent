@@ -31,7 +31,6 @@
         <nexus.staging.deploy.id>camunda-nexus</nexus.staging.deploy.id>
         <nexus.staging.deploy.url>https://artifacts.camunda.com/artifactory</nexus.staging.deploy.url>
 
-        <nexus.sonatype.url>https://oss.sonatype.org</nexus.sonatype.url>
         <autoReleaseAfterClose>true</autoReleaseAfterClose>
     </properties>
 
