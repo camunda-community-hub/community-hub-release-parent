@@ -257,18 +257,27 @@
             <id>central-sonatype-publish</id>
             <properties>
                 <serverId>central</serverId>
+                <!-- 
+                deploymentName is redundant with central.sonatype.deployment.name but is kept for backward compatibility.
+                -->
                 <deploymentName>${project.groupId}:${project.artifactId}:${project.version}</deploymentName>
+                <!-- 
+                If central.sonatype.deployment.name is set, it always takes precedence over deploymentName.
+                This is the property that child POMs inheriting from this POM should use to override the deployment name in the Sonatype Central Portal.
+                -->
+                <central.sonatype.deployment.name>${deploymentName}</central.sonatype.deployment.name>               
             </properties>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.7.0</version>
+                        <version>0.8.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <autoPublish>${autoReleaseAfterClose}</autoPublish>
-                            <deploymentName>${deploymentName}</deploymentName>
+                            <checksums>required</checksums>
+                            <deploymentName>${central.sonatype.deployment.name}</deploymentName>
                             <publishingServerId>${serverId}</publishingServerId>
                             <skipPublishing>${skip.central.release}</skipPublishing>
                         </configuration>
